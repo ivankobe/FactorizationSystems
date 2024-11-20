@@ -6,7 +6,18 @@
 % the current file can be a simple sequence of \input. Otherwise It
 % can start with a \section or \chapter for instance.
 
-A factorization system in a category $\mathcal{C}$ consists of two classes of morphisms $(L,R)$, such that both $L$ and $R$ contain all isomorphisms and are closed under composition, and every morphism $f: C \to D$ in $\mathcal{C}$ admits a factorization into a morphism $l\in L$ followed by a morphism $r'\in R$, which is unique up to unique isomorphism among such factorizations.\\
+A factorization system in a category $\mathcal{C}$ consists of two classes of morphisms $(L,R)$, such that both $L$ and $R$ contain all isomorphisms and are closed under composition, and every morphism $f: C \to D$ in $\mathcal{C}$ admits a factorization into a morphism $l\in L$ followed by a morphism $r'\in R$, which is unique up to unique isomorphism among such factorizations.
+\[\begin{tikzcd}
+	&& E \\
+	C &&&& D \\
+	&& {E'}
+	\arrow["r", from=1-3, to=2-5]
+	\arrow["i"', from=1-3, to=3-3]
+	\arrow["\cong", from=1-3, to=3-3]
+	\arrow["l", from=2-1, to=1-3]
+	\arrow["{l'}"', from=2-1, to=3-3]
+	\arrow["{r'}"', from=3-3, to=2-5]
+\end{tikzcd}\]
 Plan of work:
 \begin{itemize}
     \item show that factorization systems descend to slices
