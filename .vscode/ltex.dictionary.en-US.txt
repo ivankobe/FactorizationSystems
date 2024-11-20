@@ -1,0 +1,8 @@
+grupoidal
+groupoid
+topoi
+coCartesian
+Fiberwise
+Bousfield
+fibrations
+codomain
