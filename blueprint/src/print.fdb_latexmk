@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1732140643.61944 "/home/ivan/faks/FactorizationSystems/blueprint/src/print.tex" "print.pdf" "print" 1732140646.40158 0
+["pdflatex"] 1732140715.26214 "/home/ivan/faks/FactorizationSystems/blueprint/src/print.tex" "print.pdf" "print" 1732140718.07189 0
   "/home/ivan/faks/FactorizationSystems/blueprint/src/print.tex" 1732136303.33975 1158 8117c635d0687240deec24c1c3d401de ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
@@ -152,11 +152,11 @@
   "/usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf" 1727217670 42021 a58d36c7ede3d2fc9f93da62d691ddff ""
   "/usr/local/texlive/2024/texmf-var/web2c/xetex/xelatex.fmt" 1731935161 5879541 edcea619a287a459b1d1f4b1b07f83da ""
   "/usr/local/texlive/2024/texmf.cnf" 1731934755.89766 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "content.tex" 1732140639.14649 2122 42c82408b81f9b547522a20f3ce4e143 ""
+  "content.tex" 1732140714.81596 2131 597b8830bd59b48a30fd9bb1317b1c11 ""
   "macros/common.tex" 1732131582.19948 820 60fafcc3aa944a5e60030581a943ef6b ""
   "macros/print.tex" 1732131582.19948 1101 87627b2ec24fef68edc71c13f43f7bab ""
-  "print.aux" 1732140645.87062 151 1087a38a791066fb0a59795ffeb395e0 "pdflatex"
-  "print.out" 1732140645.2706 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "print.aux" 1732140717.53202 151 1087a38a791066fb0a59795ffeb395e0 "pdflatex"
+  "print.out" 1732140716.932 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   "print.tex" 1732136303.33975 1158 8117c635d0687240deec24c1c3d401de ""
   (generated)
   "print.aux"
