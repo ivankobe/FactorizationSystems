@@ -1,7 +1,5 @@
 import Mathlib.CategoryTheory.Category.Basic
-import Mathlib.CategoryTheory.Comma.Arrow
 import Mathlib.CategoryTheory.Comma.Over
-import Mathlib.CategoryTheory.Limits.Shapes.Terminal
 import Mathlib.CategoryTheory.ClosedUnderIsomorphisms
 import Mathlib.CategoryTheory.MorphismProperty.Composition
 
@@ -17,7 +15,7 @@ def contains_isos (W : MorphismProperty C) : Prop :=
 class is_closed_comp (W : MorphismProperty C) extends W.Respects W where
 
 /-- The structure of a factorization system on a category C with specified classes of morphisms -/
-structure FactorizationSystem (L R : MorphismProperty C) where
+structure FactorizationSystem {C : Type u} [Category.{v} C] (L R : MorphismProperty C) where
   /-- The left class contains isomorphism -/
   contains_isos_left_class : contains_isos L
   /-- The right class contains isomorphism -/
@@ -35,19 +33,20 @@ structure FactorizationSystem (L R : MorphismProperty C) where
   /-- The right map of the factorization -/
   right_map : {X Y : C} → (f : X ⟶ Y) → image f ⟶ Y
   /-- The left map of the factorization is contained in the left class-/
-  right_map_in_right_class : {X Y : C} → (f : X ⟶ Y) → R (left_map f)
+  right_map_in_right_class : {X Y : C} → (f : X ⟶ Y) → R (right_map f)
   /-- The factorization-/
   factorization : {X Y : C} → (f : X ⟶ Y) → left_map f ≫ right_map f = f := by aesop_cat
   /-- The factorization is unique up to isomorphism -/
-  iso :
-    {X Y : C} → (f : X ⟶ Y) → (im : C) → (left : X ⟶ im) → (right : im ⟶ Y) →
+  factorization_iso :
+    {X Y : C} → (f : X ⟶ Y) → (im : C) → (left : X ⟶ im) → L left→ (right : im ⟶ Y) → R right →
     (fact : left ≫ right = f) →
     Σ' i : image f ≅ im, left_map f ≫ i.hom = left ∧ i.hom ≫ right = right_map f
   /-- The factorization is unique up toa unique isomorphism -/
-  is_unique_iso :
-    {X Y : C} → (f : X ⟶ Y) → (im : C) → (left : X ⟶ im) → (right : im ⟶ Y) →
-    (fact : left ≫ right = f) → (i : image f ≅ im) → (comm₁ : left_map f ≫ i.hom = left) →
-    (comm₂ : i.hom ≫ right = right_map f) → i = (iso f im left right fact).fst
+  factorization_iso_is_unique :
+    {X Y : C} → (f : X ⟶ Y) → (im : C) → (left : X ⟶ im)→ (p : L left) → (right : im ⟶ Y) →
+    (q : R right) → (fact : left ≫ right = f) → (i : image f ≅ im) →
+    (comm₁ : left_map f ≫ i.hom = left) → (comm₂ : i.hom ≫ right = right_map f) →
+    i = (factorization_iso f im left p right q fact).fst
 
 /-- A class of morphisms in C defines a class of morphism in the slice C/X for every X ∈ C -/
 def MorphismPropertySlice (W : MorphismProperty C) (X : C) : MorphismProperty (Over X) := by
@@ -101,64 +100,108 @@ def forget_preserves_isos : {X : C} → {f g : Over X} → (i : f ≅ g) → f.l
 
 end Over
 
+def image_slice : {X : C} → {L R : MorphismProperty C} → (F : FactorizationSystem L R) →
+    {f g : Over X} → (φ : f ⟶ g) → Over X := by
+  rintro _ _ _ F _ ⟨_,_,g⟩ ⟨φ,_,_⟩
+  apply Over.mk ((F.right_map φ) ≫ g)
+
+def left_map_slice : {X : C} → {L R : MorphismProperty C} → (F : FactorizationSystem L R) →
+    {f g : Over X} → (φ : f ⟶ g) → (f ⟶ image_slice F φ) := by
+  rintro _ _ _ F ⟨_,_,f⟩ ⟨_,_,g⟩ ⟨φ,_,w⟩
+  have comm : F.left_map φ ≫ F.right_map φ ≫ g = f := by
+    calc
+      F.left_map φ ≫ F.right_map φ ≫ g =  (F.left_map φ ≫ F.right_map φ) ≫ g := by simp
+      _ = φ ≫ g := by exact (F.factorization φ) =≫ g
+      _ = f := by simp at w ; exact w
+  exact Over.homMk (F.left_map φ) comm
+
+def left_map_in_left_class_slice : {X : C} → {L R : MorphismProperty C} →
+    (F : FactorizationSystem L R) → {f g : Over X} → (φ : f ⟶ g) →
+    (MorphismPropertySlice L X) (left_map_slice F φ) := by
+  rintro _ _ _ F _ _ ⟨φ,_,_⟩
+  have el := F.left_map_in_left_class φ
+  aesop_cat
+
+def right_map_slice : {X : C} → {L R : MorphismProperty C} → (F : FactorizationSystem L R) →
+    {f g : Over X} → (φ : f ⟶ g) → (image_slice F φ ⟶ g) := by
+  rintro _ _ _ F _ _ ⟨φ,_,_⟩
+  exact Over.homMk (F.right_map φ) (by aesop_cat)
+
+def right_map_in_right_class_slice : {X : C} → {L R : MorphismProperty C} →
+    (F : FactorizationSystem L R) → {f g : Over X} → (φ : f ⟶ g) →
+    (MorphismPropertySlice R X) (right_map_slice F φ) := by
+  rintro _ _ _ F _ _ ⟨φ,_,_⟩
+  have el := F.right_map_in_right_class φ
+  aesop_cat
+
+def factorization_slice : {X : C} → {L R : MorphismProperty C} → (F : FactorizationSystem L R) →
+    {f g : Over X} → (φ : f ⟶ g) → left_map_slice F φ ≫ right_map_slice F φ = φ := by
+  rintro _ _ _ F _ _ ⟨φ,_,_⟩
+  have fact := F.factorization φ
+  aesop_cat
+
+def factorization_iso_slice : {X : C} → {L R : MorphismProperty C} → (F : FactorizationSystem L R) →
+    {f g : Over X} → (φ : f ⟶ g) → (im : Over X) → (left : f ⟶ im) →
+    (p : (MorphismPropertySlice L X) left) → (right : im ⟶ g) →
+    (q : (MorphismPropertySlice R X) right) → (fact : left ≫ right = φ) →
+      Σ' i : image_slice F φ ≅ im,
+        left_map_slice F φ ≫ i.hom = left ∧ i.hom ≫ right = right_map_slice F φ := by
+  rintro _ _ _ F _ ⟨_,_,g⟩ ⟨φ,_,_⟩ ⟨_,_,h⟩ ⟨l,_,_⟩ _ ⟨r,_,w⟩ _ fact
+  have ⟨i,⟨P,Q⟩⟩ :=
+    F.factorization_iso φ _ l (by aesop_cat) r (by aesop_cat) (Over.forget_map_comp _ _ _ fact)
+  exact {
+    fst := by
+      have comm : i.hom ≫ h = (F.right_map φ) ≫ g := by
+        calc
+          i.hom ≫ h = i.hom ≫ r ≫ g := by simp at w ; rw [←w]
+          _ = (F.right_map φ) ≫ g := by rw [←Q] ; simp
+      exact Over.isoMk i (by simp ; exact comm)
+    snd := by aesop_cat
+  }
+
+
+def factorization_iso_is_unique_slice : {X : C} → {L R : MorphismProperty C} →
+    (F : FactorizationSystem L R) → {f g : Over X} → (φ : f ⟶ g) → (im : Over X) → (left : f ⟶ im) →
+    (p : (MorphismPropertySlice L X) left) → (right : im ⟶ g) →
+    (q : (MorphismPropertySlice R X) right) → (fact : left ≫ right = φ) →
+    (i : image_slice F φ ≅ im) → (comm₁ : left_map_slice F φ ≫ i.hom = left) →
+    (comm₂ : i.hom ≫ right = right_map_slice F φ) →
+    i = (factorization_iso_slice F φ im left p right q fact).fst := by
+  rintro _ _ _ F ⟨A,_,f⟩ ⟨B,_,g⟩ ⟨φ,_,u⟩ ⟨C,_,h⟩ ⟨l,_,v⟩ p ⟨r,_,w⟩ q fact i comm₁ comm₂
+  have uniqueness := F.factorization_iso_is_unique φ C l p r q
+    (Over.forget_map_comp _ _ _ fact)
+    (Over.forget_preserves_isos i)
+    (Over.forget_map_comp _ _ _ comm₁)
+    (Over.forget_map_comp _ _ _ comm₂)
+  ext
+  have this_is_obvious : (Over.forget_preserves_isos i).hom = i.hom.left := by rfl
+  rw [←this_is_obvious]
+  have why_do_you_not_know_this_you_stupid_machine :
+      (F.factorization_iso φ C l p r q (Over.forget_map_comp _ _ _ fact)).fst.hom =
+      (factorization_iso_slice F ⟨φ,_,u⟩ ⟨C,_,h⟩ ⟨l,_,v⟩ p ⟨r,_,w⟩ q fact).fst.hom.left := by
+    simp
+    unfold factorization_iso_slice
+    aesop_cat
+  rw [←why_do_you_not_know_this_you_stupid_machine]
+  aesop_cat
+
 /-- A factorization system in C determines descends to a factorization system in the slice -/
-def FactorizationSystemSlice : {X : C} → {L R : MorphismProperty C} → FactorizationSystem L R →
+def FactorizationSystemSlice : {X : C} → {L R : MorphismProperty C} →
+    (F : FactorizationSystem L R) →
     FactorizationSystem (MorphismPropertySlice L X) (MorphismPropertySlice R X) := by
   intro X L R F
   exact
   {
-    contains_isos_left_class := contains_isos_slice F.contains_isos_left_class,
-    contains_isos_right_class := contains_isos_slice F.contains_isos_right_class,
-    is_closed_comp_left_class := is_closed_comp_slice F.is_closed_comp_left_class,
-    is_closed_comp_right_class := is_closed_comp_slice F.is_closed_comp_right_class,
-    image := by
-      rintro _ ⟨_,_,b⟩ ⟨f,_,_⟩
-      apply Over.mk ((F.right_map f) ≫ b),
-    left_map := by
-      rintro ⟨_,_,a⟩ ⟨_,_,b⟩ ⟨f,_,w⟩
-      have comm : F.left_map f ≫ F.right_map f ≫ b = a := by
-        calc
-          F.left_map f ≫ F.right_map f ≫ b =
-          (F.left_map f ≫ F.right_map f) ≫ b := by simp
-          _ = f ≫ b := by exact (F.factorization f) =≫ b
-          _ = a := by simp at w ; exact w
-      exact Over.homMk (F.left_map f) comm,
-    left_map_in_left_class := by
-      rintro _ _ ⟨f,_,_⟩
-      have el := F.left_map_in_left_class f
-      aesop_cat
-    right_map := by
-      rintro _ _ ⟨f,_,_⟩
-      exact Over.homMk (F.right_map f) (by aesop_cat),
-    right_map_in_right_class := by
-      rintro _ _ ⟨f,_,_⟩
-      have el := F.right_map_in_right_class f
-      aesop_cat
-    factorization := by
-      rintro _ _ ⟨f,_,_⟩
-      have fact : (F.left_map f) ≫ (F.right_map f) = f := F.factorization f
-      aesop_cat,
-    iso := by
-      rintro ⟨_,_,a⟩ ⟨_,_,b⟩ ⟨g,_,u⟩ ⟨_,_,im⟩ ⟨l,_,v⟩ ⟨r,_,w⟩ fact
-      have ⟨i,⟨P,Q⟩⟩ := F.iso g _ l r (Over.forget_map_comp _ _ _ fact)
-      exact
-      {
-        fst := by
-          have comm : i.hom ≫ im = (F.right_map g) ≫ b := by
-            calc
-              i.hom ≫ im = i.hom ≫ r ≫ b := by simp at w ; rw [←w]
-              _ = (F.right_map g) ≫ b := by rw [←Q] ; simp
-          simp
-          apply Over.isoMk i (by simp ; exact comm)
-        snd := by aesop_cat
-      }
-    is_unique_iso := by
-      rintro ⟨A,_,a⟩ ⟨B,_,b⟩ ⟨g,_,u⟩ ⟨Im,_,im⟩ ⟨l,_,v⟩ ⟨r,_,w⟩
-      rintro fact i comm₁ comm₂
-      have duh := F.is_unique_iso g Im l r
-        (Over.forget_map_comp _ _ _ fact)
-        (Over.forget_preserves_isos i)
-        (Over.forget_map_comp _ _ _ comm₁)
-        (Over.forget_map_comp _ _ _ comm₂)
-      aesop_cat
+    contains_isos_left_class := contains_isos_slice F.contains_isos_left_class
+    contains_isos_right_class := contains_isos_slice F.contains_isos_right_class
+    is_closed_comp_left_class := is_closed_comp_slice F.is_closed_comp_left_class
+    is_closed_comp_right_class := is_closed_comp_slice F.is_closed_comp_right_class
+    image := image_slice F
+    left_map := left_map_slice F
+    left_map_in_left_class := left_map_in_left_class_slice F
+    right_map := right_map_slice F
+    right_map_in_right_class := right_map_in_right_class_slice F
+    factorization := factorization_slice F
+    factorization_iso := factorization_iso_slice F
+    factorization_iso_is_unique := factorization_iso_is_unique_slice F
   }

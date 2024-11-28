@@ -7,3 +7,4 @@ Bousfield
 fibrations
 codomain
 factorizations
+isomorphisms
