@@ -159,7 +159,6 @@ def factorization_iso_slice : {X : C} → {L R : MorphismProperty C} → (F : Fa
     snd := by aesop_cat
   }
 
-
 def factorization_iso_is_unique_slice : {X : C} → {L R : MorphismProperty C} →
     (F : FactorizationSystem L R) → {f g : Over X} → (φ : f ⟶ g) → (im : Over X) → (left : f ⟶ im) →
     (p : (MorphismPropertySlice L X) left) → (right : im ⟶ g) →
@@ -205,3 +204,96 @@ def FactorizationSystemSlice : {X : C} → {L R : MorphismProperty C} →
     factorization_iso := factorization_iso_slice F
     factorization_iso_is_unique := factorization_iso_is_unique_slice F
   }
+
+/-
+  We now prove that in any factorization system (L,R), the intersection of the left and the right
+  class is precisely the class of isos, i.e. L∩R=Iso
+-/
+
+variable {L R : MorphismProperty C}
+
+/- Given two (L,R)-factorizations of a map f, we construct an isomorphisms between their midpoints-/
+def fact_fact_iso : (F : FactorizationSystem L R) → {X Y : C} →  (f : X ⟶ Y) →
+    (E : C) → (l : X ⟶ E) → (p : L l) → (r : E ⟶ Y) → (q : R r) → (fact : l ≫ r = f) →
+    (E' : C) → (l' : X ⟶ E') → (p' : L l') → (r' : E' ⟶ Y) → (q' : R r') → (fact' : l' ≫ r' = f) →
+    E ≅ E' := by
+  intro F X Y f E l p r q fact E' l' p' r' q' fact'
+  apply Iso.trans
+  . exact Iso.symm (F.factorization_iso f E l p r q fact).fst
+  . exact (F.factorization_iso f E' l' p' r' q' fact').fst
+
+/- the isomorphisms commutes with left maps -/
+def fact_fact_iso_comm_left : (F : FactorizationSystem L R) → {X Y : C} →  (f : X ⟶ Y) →
+    (E : C) → (l : X ⟶ E) → (p : L l) → (r : E ⟶ Y) → (q : R r) → (fact : l ≫ r = f) →
+    (E' : C) → (l' : X ⟶ E') → (p' : L l') → (r' : E' ⟶ Y) → (q' : R r') → (fact' : l' ≫ r' = f) →
+    l ≫ (fact_fact_iso F f E l p r q fact E' l' p' r' q' fact').hom = l' := by
+  intro F X Y f E l p r q fact E' l' p' r' q' fact'
+  let comm_left := (F.factorization_iso f E l p r q fact).snd.left
+  let comm_right := (F.factorization_iso f E l p r q fact).snd.right
+  let comm_left' := (F.factorization_iso f E' l' p' r' q' fact').snd.left
+  let comm_right' := (F.factorization_iso f E' l' p' r' q' fact').snd.right
+  let inv := (F.factorization_iso f E l p r q fact).fst.inv
+  let hom := (F.factorization_iso f E l p r q fact).fst.hom
+  let hom' := (F.factorization_iso f E' l' p' r' q' fact').fst.hom
+  have duh : l = F.left_map f ≫ hom := by aesop_cat
+  calc
+    l ≫ inv ≫ hom' = F.left_map f ≫ hom' := by rw [duh] ; simp ; aesop
+    _ = l' := comm_left'
+
+/- the isomorphisms commutes with right maps -/
+def fact_fact_iso_comm_right : (F : FactorizationSystem L R) → {X Y : C} →  (f : X ⟶ Y) →
+    (E : C) → (l : X ⟶ E) → (p : L l) → (r : E ⟶ Y) → (q : R r) → (fact : l ≫ r = f) →
+    (E' : C) → (l' : X ⟶ E') → (p' : L l') → (r' : E' ⟶ Y) → (q' : R r') → (fact' : l' ≫ r' = f) →
+    (fact_fact_iso F f E l p r q fact E' l' p' r' q' fact').hom ≫ r' = r := by
+  intro F X Y f E l p r q fact E' l' p' r' q' fact'
+  let comm_left := (F.factorization_iso f E l p r q fact).snd.left
+  let comm_right := (F.factorization_iso f E l p r q fact).snd.right
+  let comm_left' := (F.factorization_iso f E' l' p' r' q' fact').snd.left
+  let comm_right' := (F.factorization_iso f E' l' p' r' q' fact').snd.right
+  unfold fact_fact_iso
+  simp
+  let inv := (F.factorization_iso f E l p r q fact).fst.inv
+  let hom := (F.factorization_iso f E l p r q fact).fst.hom
+  let hom' := (F.factorization_iso f E' l' p' r' q' fact').fst.hom
+  calc
+    inv ≫ hom' ≫ r' = inv ≫ F.right_map f := by rw [comm_right']
+    _ = inv ≫ hom ≫ r := by rw [comm_right]
+    _ = (inv ≫ hom) ≫ r := by simp
+    _ = (𝟙 _) ≫ r := by rw [(F.factorization_iso f E l p r q fact).fst.inv_hom_id]
+    _ = r := by simp
+
+namespace MorphismProperty
+
+/- Notation for intersection of morphism properties -/
+instance Inter : Inter (MorphismProperty C) where
+  inter : (L R : MorphismProperty C) → MorphismProperty C := by
+      intro L R X Y f
+      exact L f ∧ R f
+
+end MorphismProperty
+
+/- The intersection of the left and the right class are precisely the isomorphisms -/
+def left_rigth_intersection_iso :
+    FactorizationSystem L R → L ∩ R = MorphismProperty.isomorphisms C := by
+  intro F
+  ext X Y f
+  constructor
+  . intro ⟨Lf,Rf⟩
+    let inv_f := (fact_fact_iso F f
+      Y f Lf (𝟙 Y) (F.contains_isos_right_class (Iso.refl Y)) (by aesop_cat)
+      X (𝟙 X) (F.contains_isos_left_class (Iso.refl X)) f Rf (by aesop_cat)).hom
+    simp
+    use inv_f
+    constructor
+    . exact fact_fact_iso_comm_left F f
+        Y f Lf (𝟙 Y) (F.contains_isos_right_class (Iso.refl Y)) (by aesop_cat)
+        X (𝟙 X) (F.contains_isos_left_class (Iso.refl X)) f Rf (by aesop_cat)
+    .exact fact_fact_iso_comm_right F f
+        Y f Lf (𝟙 Y) (F.contains_isos_right_class (Iso.refl Y)) (by aesop_cat)
+        X (𝟙 X) (F.contains_isos_left_class (Iso.refl X)) f Rf (by aesop_cat)
+  . intro iso_f
+    simp at iso_f
+    let f_as_iso := asIso f
+    constructor
+    . exact (F.contains_isos_left_class f_as_iso)
+    . exact (F.contains_isos_right_class f_as_iso)
