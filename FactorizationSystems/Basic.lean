@@ -273,7 +273,7 @@ instance Inter : Inter (MorphismProperty C) where
 end MorphismProperty
 
 /- The intersection of the left and the right class are precisely the isomorphisms -/
-def left_rigth_intersection_iso :
+lemma left_rigth_intersection_iso :
     FactorizationSystem L R → L ∩ R = MorphismProperty.isomorphisms C := by
   intro F
   ext X Y f
@@ -297,3 +297,82 @@ def left_rigth_intersection_iso :
     constructor
     . exact (F.contains_isos_left_class f_as_iso)
     . exact (F.contains_isos_right_class f_as_iso)
+
+/-
+  The left class of a factorization system has the right cancellation property and, dually,
+  the right class of a factorization system has the left cancellation property.
+-/
+
+namespace MorphismProperty
+
+def left_cancellation (W : MorphismProperty C) : Prop :=
+  ∀ ⦃X Y Z : C⦄ (u : X ⟶ Y) (v : Y ⟶ Z) (_ : W (u ≫ v)) (_ : W v) , W u
+
+def right_cancellation (W : MorphismProperty C) : Prop :=
+  ∀ ⦃X Y Z : C⦄ (u : X ⟶ Y) (v : Y ⟶ Z) (_ : W (u ≫ v)) (_ : W u) , W v
+
+end MorphismProperty
+
+lemma right_cancellation_left_class :
+    (F : FactorizationSystem L R) → MorphismProperty.right_cancellation L := by
+  intro F X Y Z u v Lw Lu
+  let w := u ≫ v
+  let E := F.image v
+  let s := F.left_map v
+  let p := F.right_map v
+  let fact := F.factorization v
+  let i := (
+    fact_fact_iso F w E (u ≫ s)
+    (F.is_closed_comp_left_class.precomp _ Lu _ (F.left_map_in_left_class v)) p
+    (F.right_map_in_right_class v) (by aesop_cat) Z w Lw (𝟙 Z)
+    (F.contains_isos_right_class (Iso.refl Z)) (by aesop_cat)
+  )
+  have fact': i.hom ≫ (𝟙 Z) = p := by exact (
+    fact_fact_iso_comm_right F w E (u ≫ s)
+    (F.is_closed_comp_left_class.precomp _ Lu _ (F.left_map_in_left_class v)) p
+    (F.right_map_in_right_class v) (by aesop_cat) Z w Lw (𝟙 Z)
+    (F.contains_isos_right_class (Iso.refl Z)) (by aesop_cat)
+  )
+  have Lp' : L (i.hom ≫ (𝟙 Z)) := F.is_closed_comp_left_class.postcomp
+    (𝟙 Z) (F.contains_isos_left_class (Iso.refl Z))
+    i.hom (F.contains_isos_left_class _)
+  have Lp : L p := by rw [←fact'] ; exact Lp'
+  have Lsp := F.is_closed_comp_left_class.precomp s (F.left_map_in_left_class v) p Lp
+  rw [←fact]
+  exact Lsp
+
+lemma left_cancellation_right_class :
+    (F : FactorizationSystem L R) → MorphismProperty.left_cancellation R := by
+  intro F X Y Z u v Rw Rv
+  let w := u ≫ v
+  let E := F.image u
+  let t := F.left_map u
+  let q := F.right_map u
+  let fact := F.factorization u
+  let comm : t ≫ q ≫ v = w := by
+    calc
+      t ≫ q ≫ v = (t ≫ q) ≫ v := by simp
+      _ = u ≫ v := by rw [fact]
+      _ = w := by rfl
+  let i := (
+    fact_fact_iso F w E t (F.left_map_in_left_class u) (q ≫ v)
+    (F.is_closed_comp_right_class.precomp _ (F.right_map_in_right_class u) _ Rv) comm X (𝟙 X)
+    (F.contains_isos_left_class (Iso.refl X)) w Rw (by aesop_cat)
+  )
+  have fact' : t ≫ i.hom = 𝟙 X := by exact (
+    fact_fact_iso_comm_left F w E t (F.left_map_in_left_class u) (q ≫ v)
+    (F.is_closed_comp_right_class.precomp _ (F.right_map_in_right_class u) _ Rv) comm X (𝟙 X)
+    (F.contains_isos_left_class (Iso.refl X)) w Rw (by aesop_cat)
+  )
+  have eq : t = i.inv := by
+    calc
+      t = t ≫ 𝟙 E := by simp
+      _ = t ≫ i.hom ≫ i.inv := by rw [i.hom_inv_id]
+      _ = (t ≫ i.hom) ≫ i.inv := by simp
+      _ = i.inv := by rw [fact'] ; simp
+  have Riinv : R i.inv := F.contains_isos_right_class (asIso i.inv)
+  have Rt : R t := by rw [eq] ; exact Riinv
+  have Rqt : R (t ≫ q) := by
+    exact F.is_closed_comp_right_class.precomp t Rt q (F.right_map_in_right_class u)
+  rw [←fact]
+  exact Rqt
