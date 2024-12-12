@@ -8,3 +8,9 @@ fibrations
 codomain
 factorizations
 isomorphisms
+Topoi
+adjunction
+adjunctions
+univalence
+unstraightening
+bijectively

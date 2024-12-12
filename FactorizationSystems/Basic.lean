@@ -25,7 +25,7 @@ structure FactorizationSystem {C : Type u} [Category.{v} C] (L R : MorphismPrope
   /-- The right class is closed under composition -/
   is_closed_comp_right_class : is_closed_comp R
   /-- The midpoint/image of the factorization-/
-  image  : {X Y : C} → (f : X ⟶ Y) → C
+  image : {X Y : C} → (f : X ⟶ Y) → C
   /-- The left map of the factorization -/
   left_map : {X Y : C} → (f : X ⟶ Y) → X ⟶ image f
   /-- The left map of the factorization is contained in the left class-/
@@ -273,7 +273,7 @@ instance Inter : Inter (MorphismProperty C) where
 end MorphismProperty
 
 /- The intersection of the left and the right class are precisely the isomorphisms -/
-lemma left_rigth_intersection_iso :
+lemma left_right_intersection_iso :
     FactorizationSystem L R → L ∩ R = MorphismProperty.isomorphisms C := by
   intro F
   ext X Y f

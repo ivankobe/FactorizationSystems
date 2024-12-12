@@ -9,7 +9,6 @@ import FactorizationSystems.Basic
 namespace CategoryTheory
 universe u v
 variable {C : Type u} [Category.{v} C]
-variable (α : Type*)
 
 /-
 We construct some examples of factorization systems:
@@ -153,6 +152,7 @@ def factorization_iso_set_hom_comm_left : {X Y : Type u} → (f : X ⟶ Y) → (
     _  = left_map_set f ≫ right_map_set f :=
       by rw [factorization_iso_set_hom_comm_right f im left p right q fact]
     _ = f := by exact factorization_set f
+    _ = left ≫ right := by rw [←fact]
 
 /- The inverse of the solution to the lifting problem -/
 def factorization_iso_set_inv : {X Y : Type u} → (f : X ⟶ Y) → (im : Type u) → (left : X ⟶ im) →
