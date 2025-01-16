@@ -65,7 +65,7 @@ structure diagonal_filler
   comm_bot : map ≫ g = S.bot
 
 /- The sort of proofs that morphisms f and g are orthogonal -/
-structure orthogonal {A B X Y : C} (f : A ⟶ B) (g : X ⟶ Y) where
+structure orthogonal {A B X Y : C} (f : A ⟶ B) (g : X ⟶ Y)  where
   diagonal : (S : f □ g) → diagonal_filler S
   diagonal_unique :
     (S : f □ g) → (d : diagonal_filler S) → (d' : diagonal_filler S) → d.map = d'.map
@@ -675,3 +675,9 @@ def is_hom_orthogonal_aux_implies_is_orthogonal
       d.map = diagonal_filler_to_pullback l r S d PUnit.unit := by rfl
       _ = diagonal_filler_to_pullback l r S d' PUnit.unit := by rw [unique]
       _ = d'.map := by rfl
+
+noncomputable
+def hom_orthogonal_implies_orthogonal
+    {A B X Y : C} {l : A ⟶ B} {r : X ⟶ Y} (h : hom_orthogonal l r) : orthogonal l r :=
+    is_hom_orthogonal_aux_implies_is_orthogonal l r
+      ( hom_orthogonal_implies_hom_orthogonal_aux l r h)

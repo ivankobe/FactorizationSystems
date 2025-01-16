@@ -48,6 +48,60 @@ structure FactorizationSystem {C : Type u} [Category.{v} C] (L R : MorphismPrope
     (comm₁ : left_map f ≫ i.hom = left) → (comm₂ : i.hom ≫ right = right_map f) →
     i = (factorization_iso f im left p right q fact).fst
 
+/-- A useful characterization of the uniqueness of the factorization iso -/
+def factorization_iso_is_unique' {L R : MorphismProperty C} (F : FactorizationSystem L R)
+  {X Y : C} (f : X ⟶ Y) (E E' : C) (s : X ⟶ E) (hs : L s) (p : E ⟶ Y) (hp : R p) (fact : s ≫ p = f)
+  (s' : X ⟶ E') (hs' : L s') (p' : E' ⟶ Y) (hp' : R p') (fact' : s' ≫ p' = f)
+  (i i' : E ≅ E') (comm₁ : s ≫ i.hom = s') (comm₂ : i.hom ≫ p' = p) (comm₁' : s ≫ i'.hom = s')
+  (comm₂' : i'.hom ≫ p' = p) : i = i' := by
+  let α := F.factorization_iso f E' s' hs' p' hp' fact'
+  let c₁ : F.left_map f ≫ (α.fst ≪≫ i.symm).hom = s := by calc
+      F.left_map f ≫ (α.fst ≪≫ i.symm).hom =
+        F.left_map f ≫ (α.fst.hom ≫ i.symm.hom) := by aesop_cat
+      _ = (F.left_map f ≫ α.fst.hom) ≫ i.symm.hom := by simp
+      _ = s' ≫ i.symm.hom := by rw [α.snd.left]
+      _ = (s ≫ i.hom) ≫ i.symm.hom := by rw [← comm₁]
+      _ = (s ≫ i.hom) ≫ i.inv := by aesop_cat
+      _ = s ≫ i.hom ≫ i.inv := by simp
+      _ = s := by rw [i.hom_inv_id] ; simp
+  let c₂ : (α.fst ≪≫ i.symm).hom ≫ p = F.right_map f := by calc
+      (α.fst ≪≫ i.symm).hom ≫ p =
+        (α.fst.hom ≫ i.symm.hom) ≫ p := by aesop_cat
+      _ = (α.fst.hom ≫ i.symm.hom) ≫ (i.hom ≫ p') := by rw [← comm₂]
+      _ = α.fst.hom ≫ (i.symm.hom ≫ i.hom) ≫ p' := by simp
+      _ = α.fst.hom ≫ (i.inv ≫ i.hom) ≫ p' := by aesop_cat
+      _ = α.fst.hom ≫ p' := by rw [i.inv_hom_id] ; simp
+      _ = F.right_map f := α.snd.right
+  let φ := F.factorization_iso_is_unique f E s hs p hp fact (α.fst ≪≫ Iso.symm i) c₁ c₂
+  let c₁' : F.left_map f ≫ (α.fst ≪≫ i'.symm).hom = s := by calc
+      F.left_map f ≫ (α.fst ≪≫ i'.symm).hom =
+        F.left_map f ≫ (α.fst.hom ≫ i'.symm.hom) := by aesop_cat
+      _ = (F.left_map f ≫ α.fst.hom) ≫ i'.symm.hom := by simp
+      _ = s' ≫ i'.symm.hom := by rw [α.snd.left]
+      _ = (s ≫ i'.hom) ≫ i'.symm.hom := by rw [← comm₁']
+      _ = (s ≫ i'.hom) ≫ i'.inv := by aesop_cat
+      _ = s ≫ i'.hom ≫ i'.inv := by simp
+      _ = s := by rw [i'.hom_inv_id] ; simp
+  let c₂' : (α.fst ≪≫ i'.symm).hom ≫ p = F.right_map f := by calc
+      (α.fst ≪≫ i'.symm).hom ≫ p =
+        (α.fst.hom ≫ i'.symm.hom) ≫ p := by aesop_cat
+      _ = (α.fst.hom ≫ i'.symm.hom) ≫ (i'.hom ≫ p') := by rw [← comm₂']
+      _ = α.fst.hom ≫ (i'.symm.hom ≫ i'.hom) ≫ p' := by simp
+      _ = α.fst.hom ≫ (i'.inv ≫ i'.hom) ≫ p' := by aesop_cat
+      _ = α.fst.hom ≫ p' := by rw [i'.inv_hom_id] ; simp
+      _ = F.right_map f := α.snd.right
+  let ψ := F.factorization_iso_is_unique f E s hs p hp fact (α.fst ≪≫ Iso.symm i') c₁' c₂'
+  let χ : α.fst ≪≫ i.symm = α.fst ≪≫ i'.symm := by calc
+    α.fst ≪≫ i.symm = (F.factorization_iso f E s hs p hp fact).fst := φ
+    _ = α.fst ≪≫ i'.symm := by rw [← ψ ]
+  let ξ : Iso.symm i' = Iso.symm i := by calc
+    Iso.symm i' = (α.fst.symm ≪≫ α.fst) ≪≫ Iso.symm i' := by simp
+    _ = α.fst.symm ≪≫ (α.fst ≪≫ Iso.symm i') := by simp
+    _ = α.fst.symm ≪≫ (α.fst ≪≫ Iso.symm i) := by rw [ χ ]
+    _ = (α.fst.symm ≪≫ α.fst) ≪≫ Iso.symm i := by simp
+    _ = Iso.symm i := by simp
+  exact Iso.symm_eq_iff.mp (Eq.symm ξ)
+
 /-- A class of morphisms in C defines a class of morphism in the slice C/X for every X ∈ C -/
 def MorphismPropertySlice (W : MorphismProperty C) (X : C) : MorphismProperty (Over X) := by
   rintro _ _ f
@@ -173,15 +227,14 @@ def factorization_iso_is_unique_slice : {X : C} → {L R : MorphismProperty C} �
     (Over.forget_map_comp _ _ _ comm₁)
     (Over.forget_map_comp _ _ _ comm₂)
   ext
-  have this_is_obvious : (Over.forget_preserves_isos i).hom = i.hom.left := by rfl
-  rw [←this_is_obvious]
-  have why_do_you_not_know_this_you_stupid_machine :
-      (F.factorization_iso φ C l p r q (Over.forget_map_comp _ _ _ fact)).fst.hom =
-      (factorization_iso_slice F ⟨φ,_,u⟩ ⟨C,_,h⟩ ⟨l,_,v⟩ p ⟨r,_,w⟩ q fact).fst.hom.left := by
+  have coh : (Over.forget_preserves_isos i).hom = i.hom.left := by rfl
+  rw [←coh]
+  have coh' : (F.factorization_iso φ C l p r q (Over.forget_map_comp _ _ _ fact)).fst.hom =
+    (factorization_iso_slice F ⟨φ,_,u⟩ ⟨C,_,h⟩ ⟨l,_,v⟩ p ⟨r,_,w⟩ q fact).fst.hom.left := by
     simp
     unfold factorization_iso_slice
     aesop_cat
-  rw [←why_do_you_not_know_this_you_stupid_machine]
+  rw [←coh']
   aesop_cat
 
 /-- A factorization system in C determines descends to a factorization system in the slice -/
