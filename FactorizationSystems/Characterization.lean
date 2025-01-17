@@ -118,55 +118,6 @@ def FactorizationSystem_diagonal
       _ = s' ≫ p' := by rw [I.fst.inv_hom_id] ; simp
       _ = S.bot := F.factorization S.bot}
 
-def FactorizationSystem_diagonal'
-  {L R : MorphismProperty C} (F : FactorizationSystem L R) {A B X Y : C} (l : A ⟶ B) (hl : L l)
-  (r : X ⟶ Y) (hr : R r) (S : l □ r) : diagonal_filler S := by
-  let s := F.left_map S.top
-  let p := F.right_map S.top
-  let s' := F.left_map S.bot
-  let p' := F.right_map S.bot
-  let I := F.factorization_iso (l ≫ S.bot) (F.image S.bot) (l ≫ (F.left_map S.bot))
-    (F.is_closed_comp_left_class.precomp l hl (F.left_map S.bot) (F.left_map_in_left_class S.bot))
-    (F.right_map S.bot) ( F.right_map_in_right_class S.bot)
-    (by have fact := F.factorization S.bot ; aesop_cat)
-  let fact : (F.left_map S.top) ≫ (F.right_map S.top) ≫ r = S.top ≫ r := by calc
-    (F.left_map S.top) ≫ (F.right_map S.top) ≫ r =
-      ((F.left_map S.top) ≫ (F.right_map S.top)) ≫ r := by simp
-    _ = S.top ≫ r := by rw [F.factorization S.top]
-  let J := F.factorization_iso (S.top ≫ r) (F.image S.top) s (F.left_map_in_left_class S.top)
-    ((F.right_map S.top) ≫ r)
-    (F.is_closed_comp_right_class.precomp
-      (F.right_map S.top) (F.right_map_in_right_class S.top) r hr) fact
-  exact {
-    map := s' ≫ I.fst.inv ≫ (by rw [S.comm] ; exact J.fst.hom) ≫ p
-    comm_top := by calc
-      l ≫ s' ≫ I.fst.inv ≫ (by rw [S.comm] ; exact J.fst.hom) ≫ p =
-        (l ≫ s') ≫ I.fst.inv ≫ (by rw [S.comm] ; exact J.fst.hom) ≫ p := by simp
-      _ = (F.left_map (l ≫ S.bot) ≫ I.fst.hom) ≫ I.fst.inv ≫
-        ( by rw [S.comm] ; exact J.fst.hom) ≫ p := by rw [I.snd.left]
-      _ = F.left_map (l ≫ S.bot) ≫ (I.fst.hom ≫ I.fst.inv) ≫
-        ( by rw [S.comm] ; exact J.fst.hom) ≫ p := by simp
-      _ = F.left_map (l ≫ S.bot) ≫ ( by rw [S.comm] ; exact J.fst.hom) ≫ p :=
-        by rw [I.fst.hom_inv_id] ; simp
-      _ = F.left_map (S.top ≫ r) ≫ J.fst.hom ≫ p := by have comm := S.comm ; aesop_cat
-      _ = (F.left_map (S.top ≫ r) ≫ J.fst.hom) ≫ p := by simp
-      _ = s ≫ p := by rw [J.snd.left]
-      _ = S.top := F.factorization S.top
-    comm_bot := by calc
-      (s' ≫ I.fst.inv ≫ (by rw [S.comm] ; exact J.fst.hom) ≫ p) ≫ r =
-        s' ≫ I.fst.inv ≫ ((by rw [S.comm] ; exact J.fst.hom) ≫ p ≫ r) := by simp
-      _ = s' ≫ I.fst.inv ≫ (by rw [S.comm] ; exact F.right_map (S.top ≫ r)) :=
-        by have comm := S.comm ; have comm' := J.snd.right ; aesop_cat
-      _ = s' ≫ I.fst.inv ≫ (S.comm ▸ F.right_map (S.top ≫ r)) :=
-        by rw [← rw_eq_apd S.comm F.right_map]
-      _ = s' ≫ I.fst.inv ≫ F.right_map (l ≫ S.bot) :=
-        by rw [comm_square_right_map_apd F l r S]
-      _ = s' ≫ I.fst.inv ≫ I.fst.hom ≫ p' := by rw [I.snd.right]
-      _ = s' ≫ (I.fst.inv ≫ I.fst.hom) ≫ p' := by simp
-      _ = s' ≫ p' := by rw [I.fst.inv_hom_id] ; simp
-      _ = S.bot := F.factorization S.bot
-  }
-
 def FactorizationSystem_diagonal_canonicity
   {L R : MorphismProperty C} (F : FactorizationSystem L R) {A B X Y : C} (l : A ⟶ B) (hl : L l)
   (r : X ⟶ Y) (hr : R r) (S : l □ r) (d : diagonal_filler S) :
