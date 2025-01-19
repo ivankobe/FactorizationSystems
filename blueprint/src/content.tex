@@ -5,13 +5,15 @@
 % If you want to split the blueprint content into several files then
 % the current file can be a simple sequence of \input. Otherwise It
 % can start with a \section or \chapter for instance.
-\section*{Definitions and basic properties}
+
+\section{Definitions and basic properties}
 
 \begin{definition}
-  % \lean{structure:FactorizationSystem}
-  % \leanok
+  \lean{FactorizationSystem}
+  \leanok
   A factorization system in a category $\mathcal{C}$ consists of two classes of morphisms $(L,R)$, such that both $L$ and $R$ contain isomorphisms and are closed under composition, and every morphism $f: C \to D$ in $\mathcal{C}$ admits a factorization into a morphism $l\in L$ followed by a morphism $r\in R$, which is unique up to unique isomorphism among such factorizations.
-  \[\begin{tikzcd}
+  \begin{center}
+    \begin{tikzcd}
   	&& E \\
   	C &&&& D \\
   	&& {E'}
@@ -21,36 +23,99 @@
   	\arrow["l", from=2-1, to=1-3]
   	\arrow["{l'}"', from=2-1, to=3-3]
   	\arrow["{r'}"', from=3-3, to=2-5]
-  \end{tikzcd}\]
+  \end{tikzcd}
+\end{center}
 \end{definition}
 
 \begin{definition}
-  % \lean{def:MorphismPropertySlice}
-  % \leanok
+  \lean{MorphismPropertySlice}
+  \leanok
   If $W$ is a class of morphisms in a category $\mathcal{C}$ and $X$ is an object in $\mathcal{C}$, we define a class of morphisms $W/X$ in $\mathcal{C}/X$, given by $f \in W/X$ iff $U f \in W$, where $U : \mathcal{C}/X \to \mathcal{C}$ is the forgetful functor.
 \end{definition}
 
 \begin{lemma}
-  % \lean{def:FactorizationSystemSlice}
-  % \leanok
+  \lean{FactorizationSystemSlice}
+  \leanok
   If $(L,R)$ is a factorization system in a category $\mathcal{C}$ and $X$ is an object in $\mathcal{C}$, then $(L/X,R/X)$ is a factorization system in $\mathcal{C}/X$.
 \end{lemma}
 
 \begin{lemma}
-  % \lean{lemma:left_right_intersection_iso}
-  % \leanok
+  \lean{left_right_intersection_iso}
+  \leanok
   If $(L,R)$ is a factorization system in a category $\mathcal{C}$, then the intersection of $L$ and $R$ is precisely the class of isomorpihsms in $\mathcal{C}$.
 \end{lemma}
 
 \begin{lemma}
-  % \lean{lemma:right_cancellation_left_class}
-  % \lean{lemma:left_cancellation_right_class}
-  % \leanok
+  \lean{right_cancellation_left_class}
+  \lean{left_cancellation_right_class}
+  \leanok
   If $(L,R)$ is a factorization system in a category $\mathcal{C}$, then $R$ has the left cancellation property and $L$ has the right cancellation property.
 \end{lemma}
 
 \begin{lemma}
-  % \lean{instance:EpiMonoSet}
-  % \leanok
+  \lean{instance:EpiMonoSet}
+  \leanok
   $(\text{Epi},\text{Mono})$ is a factorization system in $\text{Set}$.
 \end{lemma}
+
+\section{Orthogonality}
+
+\begin{definition}
+  \lean{orthogonal}
+  \lean{orthogonal_class}
+  \leanok
+  Given two morphisms $l : A \to B$ and $r : X \to Y$ in $\mathcal{C}$, we say that $l$ is left-orthogonal to $g$, or that $g$ is right-orthogonal to $l$, if for every commutative square
+  \begin{center}
+    \begin{tikzcd}
+      A & X \\
+      B & Y,
+      \arrow["u", from=1-1, to=1-2]
+      \arrow["l"', from=1-1, to=2-1]
+      \arrow["r", from=1-2, to=2-2]
+      \arrow["d", dashed, from=2-1, to=1-2]
+      \arrow["v"', from=2-1, to=2-2]
+    \end{tikzcd}
+  \end{center}
+  there exists a unique diagonal filler $d$ making both triangles commute. If $L$ and $R$ are two classes of maps in $\mathcal{C}$, we say that $L$ is left-orthogonal to $R$ if every morphism in $L$ is left-orthogonal to every morphism in $R$.
+\end{definition}
+
+\begin{lemma}
+  \lean{hom_orthogonal_implies_orthogonal}
+  \lean{orthogonal_implies_hom_orthogonal}
+  \leanok
+  Given $l$ and $r$ as above, $l$ is left-orthogonal to $r$ iff the square
+  \begin{center}
+    \begin{tikzcd}
+      {\emph{Hom}(B,X)} & {\emph{Hom}(A,X)} \\
+      {\emph{Hom}(B,Y)} & {\emph{Hom}(A,Y)}
+      \arrow["{l^*}", from=1-1, to=1-2]
+      \arrow["{r_*}"', from=1-1, to=2-1]
+      \arrow["{r_*}", from=1-2, to=2-2]
+      \arrow["{l^*}"', from=2-1, to=2-2]
+    \end{tikzcd}
+  \end{center}
+  is Cartesian in Set. 
+\end{lemma}
+
+\begin{definition}
+  \lean{left_orthogonal_complement}
+  \lean{right_orthogonal_complement}
+  \leanok
+  Let $W$ be a class of morphisms in a category $\mathcal{C}$. The left orthogonal complement of $W$, denoted ${}^{\bot}W$, consists of those morphisms in $\mathcal{C}$ which are left orthogonal to every morphism in $W$. The right orthogonal complement of $W$, denoted $W^\bot$, consists of those morphisms in $\mathcal{C}$ which are right orthogonal to every morphism in $W$.
+\end{definition}
+
+\begin{lemma}
+  \lean{is_closed_under_limits_r_ort_complement}
+  \lean{is_closed_under_comp_l_ort_complement}
+  \lean{left_cancellation_r_ort_complement}
+  \lean{base_change_r_ort_complement}
+  \lean{contains_isos_right_ort_complement}
+  \leanok
+  For every class of morphisms $W$, $W^\bot$ contains isomorphisms and is closed under limits, composition and base change, and has the left cancellation property. The left orthogonal complement enjoys dual properties.
+\end{lemma}
+
+\begin{theorem}
+  \lean{FactorizationSystem_characterization}
+  \leanok
+  Given two classes of maps $L,R$ in a category $\mathcal{C}$, there exists a $(L,R)-$factorization system on $\mathcal{C}$ iff every morphism in $\mathcal{C}$ has a $(L,R)-$factorization, $L$ is left-orthogonal to $R$ and both $L$ and $R$ are replete.
+\end{theorem}

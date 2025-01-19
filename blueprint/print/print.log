@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.18)  19 JAN 2025 12:22
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.18)  19 JAN 2025 13:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -987,35 +987,37 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ] (./content.tex
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00107pt on input line 13.
+(Font)              scaled to size 10.00107pt on input line 14.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00075pt on input line 13.
+(Font)              scaled to size 7.00075pt on input line 14.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00053pt on input line 13.
+(Font)              scaled to size 5.00053pt on input line 14.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 13.
+(Font)              scaled to size 9.99893pt on input line 14.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 13.
+(Font)              scaled to size 6.99925pt on input line 14.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 13.
-)
+(Font)              scaled to size 4.99947pt on input line 14.
 
-[1] (/home/ivan/faks/FactorizationSystems/blueprint/print/print.aux)
+
+[1])
+
+[2] (/home/ivan/faks/FactorizationSystems/blueprint/print/print.aux)
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-11-02>
  ***********
 Package rerunfilecheck Info: File `print.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+(rerunfilecheck)             Checksum: BA3D51CE8485558A4E168C7480A79D16;324.
  ) 
 Here is how much of TeX's memory you used:
- 28096 strings out of 473995
- 564267 string characters out of 5734089
- 1134983 words of memory out of 5000000
- 50592 multiletter control sequences out of 15000+600000
- 563416 words of font info for 82 fonts, out of 8000000 for 9000
+ 28193 strings out of 473995
+ 566611 string characters out of 5734089
+ 1149983 words of memory out of 5000000
+ 50685 multiletter control sequences out of 15000+600000
+ 563432 words of font info for 84 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 116i,15n,121p,542b,1117s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 116i,16n,121p,542b,1132s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on /home/ivan/faks/FactorizationSystems/blueprint/print/print.pd
-f (2 pages).
+f (3 pages).

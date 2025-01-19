@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1737285746.41689 "print.tex" "/home/ivan/faks/FactorizationSystems/blueprint/print/print.pdf" "print" 1737285749.3011 0
-  "/home/ivan/faks/FactorizationSystems/blueprint/print/print.aux" 1737285748.78026 151 1087a38a791066fb0a59795ffeb395e0 "pdflatex"
-  "/home/ivan/faks/FactorizationSystems/blueprint/print/print.out" 1737285748.20825 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["pdflatex"] 1737291026.47504 "print.tex" "/home/ivan/faks/FactorizationSystems/blueprint/print/print.pdf" "print" 1737291029.62022 0
+  "/home/ivan/faks/FactorizationSystems/blueprint/print/print.aux" 1737291029.17969 398 2a28c31f63575a6540d38e712a2aa87e "pdflatex"
+  "/home/ivan/faks/FactorizationSystems/blueprint/print/print.out" 1737291029.18369 324 ba3d51ce8485558a4e168c7480a79d16 "pdflatex"
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -153,7 +153,7 @@
   "/usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf" 1727217670 42021 a58d36c7ede3d2fc9f93da62d691ddff ""
   "/usr/local/texlive/2024/texmf-var/web2c/xetex/xelatex.fmt" 1731935161 5879541 edcea619a287a459b1d1f4b1b07f83da ""
   "/usr/local/texlive/2024/texmf.cnf" 1731934755.89766 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "content.tex" 1737285740.61205 2435 3df25b59c262920aa4c541b9497611f6 ""
+  "content.tex" 1737291021.51548 5094 72d338f7cf0035b9f21e4fcd033ee09d ""
   "macros/common.tex" 1732131582.19948 820 60fafcc3aa944a5e60030581a943ef6b ""
   "macros/print.tex" 1732131582.19948 1101 87627b2ec24fef68edc71c13f43f7bab ""
   "print.tex" 1732136303.33975 1158 8117c635d0687240deec24c1c3d401de ""

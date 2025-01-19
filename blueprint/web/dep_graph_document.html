@@ -73,26 +73,26 @@
       Definition
       </span>
       <span class="definition_thmlabel">1</span></div>
-    <div class="thm_thmcontent"><p>A factorization system in a category \(\mathcal{C}\) consists of two classes of morphisms \((L,R)\), such that both \(L\) and \(R\) contain isomorphisms and are closed under composition, and every morphism \(f: C \to D\) in \(\mathcal{C}\) admits a factorization into a morphism \(l\in L\) followed by a morphism \(r\in R\), which is unique up to unique isomorphism among such factorizations. </p>
-<div class="displaymath" id="a0000000004">
-  \[ \begin{tikzcd} 
-  	&& E \\
-  	C &&&& D \\
-  	&& {E'}
-  	\arrow["r", from=1-3, to=2-5]
-  	\arrow["i"', from=1-3, to=3-3]
-  	\arrow["\cong", from=1-3, to=3-3]
-  	\arrow["l", from=2-1, to=1-3]
-  	\arrow["{l'}"', from=2-1, to=3-3]
-  	\arrow["{r'}"', from=3-3, to=2-5]
-  \end{tikzcd} \]
-</div>
+    <div class="thm_thmcontent"><p> A factorization system in a category \(\mathcal{C}\) consists of two classes of morphisms \((L,R)\), such that both \(L\) and \(R\) contain isomorphisms and are closed under composition, and every morphism \(f: C \to D\) in \(\mathcal{C}\) admits a factorization into a morphism \(l\in L\) followed by a morphism \(r\in R\), which is unique up to unique isomorphism among such factorizations. </p>
+<div class="centered"> <div class="tikzcd" id="a0000000004">
+    <img src="images/img-0001.svg" class="tikzcd-vector" alt="\begin{tikzcd} 
+  	&amp;&amp; E \\
+  	C &amp;&amp;&amp;&amp; D \\
+  	&amp;&amp; {E&#39;}
+  	\arrow[&#34;r&#34;, from=1-3, to=2-5]
+  	\arrow[&#34;i&#34;&#39;, from=1-3, to=3-3]
+  	\arrow[&#34;\cong&#34;, from=1-3, to=3-3]
+  	\arrow[&#34;l&#34;, from=2-1, to=1-3]
+  	\arrow[&#34;{l&#39;}&#34;&#39;, from=2-1, to=3-3]
+  	\arrow[&#34;{r&#39;}&#34;&#39;, from=3-3, to=2-5]
+  \end{tikzcd}" />
+</div> </div>
 </div>
 
     <a class="latex_link" href="index.html#a0000000003">LaTeX</a>
     
     
-  
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/FactorizationSystem">Lean</a>
     
     
   
@@ -116,13 +116,13 @@
       Definition
       </span>
       <span class="definition_thmlabel">2</span></div>
-    <div class="thm_thmcontent"><p>If \(W\) is a class of morphisms in a category \(\mathcal{C}\) and \(X\) is an object in \(\mathcal{C}\), we define a class of morphisms \(W/X\) in \(\mathcal{C}/X\), given by \(f \in W/X\) iff \(U f \in W\), where \(U : \mathcal{C}/X \to \mathcal{C}\) is the forgetful functor. </p>
+    <div class="thm_thmcontent"><p> If \(W\) is a class of morphisms in a category \(\mathcal{C}\) and \(X\) is an object in \(\mathcal{C}\), we define a class of morphisms \(W/X\) in \(\mathcal{C}/X\), given by \(f \in W/X\) iff \(U f \in W\), where \(U : \mathcal{C}/X \to \mathcal{C}\) is the forgetful functor. </p>
 </div>
 
     <a class="latex_link" href="index.html#a0000000005">LaTeX</a>
     
     
-  
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/MorphismPropertySlice">Lean</a>
     
     
   
@@ -146,13 +146,13 @@
       Lemma
       </span>
       <span class="lemma_thmlabel">3</span></div>
-    <div class="thm_thmcontent"><p>If \((L,R)\) is a factorization system in a category \(\mathcal{C}\) and \(X\) is an object in \(\mathcal{C}\), then \((L/X,R/X)\) is a factorization system in \(\mathcal{C}/X\). </p>
+    <div class="thm_thmcontent"><p> If \((L,R)\) is a factorization system in a category \(\mathcal{C}\) and \(X\) is an object in \(\mathcal{C}\), then \((L/X,R/X)\) is a factorization system in \(\mathcal{C}/X\). </p>
 </div>
 
     <a class="latex_link" href="index.html#a0000000006">LaTeX</a>
     
     
-  
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/FactorizationSystemSlice">Lean</a>
     
     
   
@@ -176,13 +176,13 @@
       Lemma
       </span>
       <span class="lemma_thmlabel">4</span></div>
-    <div class="thm_thmcontent"><p>If \((L,R)\) is a factorization system in a category \(\mathcal{C}\), then the intersection of \(L\) and \(R\) is precisely the class of isomorpihsms in \(\mathcal{C}\). </p>
+    <div class="thm_thmcontent"><p> If \((L,R)\) is a factorization system in a category \(\mathcal{C}\), then the intersection of \(L\) and \(R\) is precisely the class of isomorpihsms in \(\mathcal{C}\). </p>
 </div>
 
     <a class="latex_link" href="index.html#a0000000007">LaTeX</a>
     
     
-  
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/left_right_intersection_iso">Lean</a>
     
     
   
@@ -206,13 +206,13 @@
       Lemma
       </span>
       <span class="lemma_thmlabel">5</span></div>
-    <div class="thm_thmcontent"><p>If \((L,R)\) is a factorization system in a category \(\mathcal{C}\), then \(R\) has the left cancellation property and \(L\) has the right cancellation property. </p>
+    <div class="thm_thmcontent"><p>  If \((L,R)\) is a factorization system in a category \(\mathcal{C}\), then \(R\) has the left cancellation property and \(L\) has the right cancellation property. </p>
 </div>
 
     <a class="latex_link" href="index.html#a0000000008">LaTeX</a>
     
     
-  
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/left_cancellation_right_class">Lean</a>
     
     
   
@@ -236,13 +236,186 @@
       Lemma
       </span>
       <span class="lemma_thmlabel">6</span></div>
-    <div class="thm_thmcontent"><p>\((\text{Epi},\text{Mono})\) is a factorization system in \(\text{Set}\). </p>
+    <div class="thm_thmcontent"><p> \((\text{Epi},\text{Mono})\) is a factorization system in \(\text{Set}\). </p>
 </div>
 
     <a class="latex_link" href="index.html#a0000000009">LaTeX</a>
     
     
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/instance:EpiMonoSet">Lean</a>
+    
+    
   
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="a0000000011_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="a0000000011" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">7</span></div>
+    <div class="thm_thmcontent"><p>  Given two morphisms \(l : A \to B\) and \(r : X \to Y\) in \(\mathcal{C}\), we say that \(l\) is left-orthogonal to \(g\), or that \(g\) is right-orthogonal to \(l\), if for every commutative square </p>
+<div class="centered"> <div class="tikzcd" id="a0000000012">
+    <img src="images/img-0002.svg" class="tikzcd-vector" alt="\begin{tikzcd} 
+      A &amp; X \\
+      B &amp; Y,
+      \arrow[&#34;u&#34;, from=1-1, to=1-2]
+      \arrow[&#34;l&#34;&#39;, from=1-1, to=2-1]
+      \arrow[&#34;r&#34;, from=1-2, to=2-2]
+      \arrow[&#34;d&#34;, dashed, from=2-1, to=1-2]
+      \arrow[&#34;v&#34;&#39;, from=2-1, to=2-2]
+    \end{tikzcd}" />
+</div> </div>
+<p> there exists a unique diagonal filler \(d\) making both triangles commute. If \(L\) and \(R\) are two classes of maps in \(\mathcal{C}\), we say that \(L\) is left-orthogonal to \(R\) if every morphism in \(L\) is left-orthogonal to every morphism in \(R\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#a0000000011">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/orthogonal_class">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="a0000000013_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="a0000000013" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">8</span></div>
+    <div class="thm_thmcontent"><p>  Given \(l\) and \(r\) as above, \(l\) is left-orthogonal to \(r\) iff the square </p>
+<div class="centered"> <div class="tikzcd" id="a0000000014">
+    <img src="images/img-0003.svg" class="tikzcd-vector" alt="\begin{tikzcd} 
+      {\emph{Hom}(B,X)} &amp; {\emph{Hom}(A,X)} \\
+      {\emph{Hom}(B,Y)} &amp; {\emph{Hom}(A,Y)}
+      \arrow[&#34;{l^*}&#34;, from=1-1, to=1-2]
+      \arrow[&#34;{r_*}&#34;&#39;, from=1-1, to=2-1]
+      \arrow[&#34;{r_*}&#34;, from=1-2, to=2-2]
+      \arrow[&#34;{l^*}&#34;&#39;, from=2-1, to=2-2]
+    \end{tikzcd}" />
+</div> </div>
+<p> is Cartesian in Set. </p>
+</div>
+
+    <a class="latex_link" href="index.html#a0000000013">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/orthogonal_implies_hom_orthogonal">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="a0000000015_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="a0000000015" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">9</span></div>
+    <div class="thm_thmcontent"><p>  Let \(W\) be a class of morphisms in a category \(\mathcal{C}\). The left orthogonal complement of \(W\), denoted \({}^{\bot }W\), consists of those morphisms in \(\mathcal{C}\) which are left orthogonal to every morphism in \(W\). The right orthogonal complement of \(W\), denoted \(W^\bot \), consists of those morphisms in \(\mathcal{C}\) which are right orthogonal to every morphism in \(W\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#a0000000015">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/right_orthogonal_complement">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="a0000000016_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="a0000000016" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">10</span></div>
+    <div class="thm_thmcontent"><p>     For every class of morphisms \(W\), \(W^\bot \) contains isomorphisms and is closed under limits, composition and base change, and has the left cancellation property. The left orthogonal complement enjoys dual properties. </p>
+</div>
+
+    <a class="latex_link" href="index.html#a0000000016">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/contains_isos_right_ort_complement">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="a0000000017_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="a0000000017" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">11</span></div>
+    <div class="thm_thmcontent"><p> Given two classes of maps \(L,R\) in a category \(\mathcal{C}\), there exists a \((L,R)-\)factorization system on \(\mathcal{C}\) iff every morphism in \(\mathcal{C}\) has a \((L,R)-\)factorization, \(L\) is left-orthogonal to \(R\) and both \(L\) and \(R\) are replete. </p>
+</div>
+
+    <a class="latex_link" href="index.html#a0000000017">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="https://ivankobe.github.io/FactorizationSystems/docs/find/#doc/FactorizationSystem_characterization">Lean</a>
     
     
   
@@ -270,7 +443,7 @@ graphContainer.graphviz({useWorker: true})
     .width(width)
     .height(height)
     .fit(true)
-    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	a0000000003	[color=blue,		fillcolor="#A3D6FF",		label=a0000000003,		shape=box,		style=filled];	a0000000005	[color=blue,		fillcolor="#A3D6FF",		label=a0000000005,		shape=box,		style=filled];	a0000000008	[color=blue,		label=a0000000008,		shape=ellipse];	a0000000007	[color=blue,		label=a0000000007,		shape=ellipse];	a0000000006	[color=blue,		label=a0000000006,		shape=ellipse];	a0000000009	[color=blue,		label=a0000000009,		shape=ellipse];}`)
+    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	a0000000015	[color=green,		fillcolor="#B0ECA3",		label=a0000000015,		shape=box,		style=filled];	a0000000011	[color=green,		fillcolor="#B0ECA3",		label=a0000000011,		shape=box,		style=filled];	a0000000007	[color=green,		label=a0000000007,		shape=ellipse];	a0000000008	[color=green,		label=a0000000008,		shape=ellipse];	a0000000013	[color=green,		label=a0000000013,		shape=ellipse];	a0000000016	[color=green,		label=a0000000016,		shape=ellipse];	a0000000003	[color=green,		fillcolor="#B0ECA3",		label=a0000000003,		shape=box,		style=filled];	a0000000005	[color=green,		fillcolor="#B0ECA3",		label=a0000000005,		shape=box,		style=filled];	a0000000006	[color=green,		label=a0000000006,		shape=ellipse];	a0000000009	[color=green,		label=a0000000009,		shape=ellipse];	a0000000017	[color=green,		label=a0000000017,		shape=ellipse];}`)
     .on("end", interactive);
 
 latexLabelEscaper = function(label) {
