@@ -34,7 +34,153 @@
 <p class="authors">
 <span class="author">Ivan Kobe</span>
 </p>
-</div>yo  
+</div><h1 id="a0000000002">Definitions and basic properties</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="a0000000003">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">1</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="index.html#a0000000003">#</a>
+    
+    
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>A factorization system in a category \(\mathcal{C}\) consists of two classes of morphisms \((L,R)\), such that both \(L\) and \(R\) contain isomorphisms and are closed under composition, and every morphism \(f: C \to D\) in \(\mathcal{C}\) admits a factorization into a morphism \(l\in L\) followed by a morphism \(r\in R\), which is unique up to unique isomorphism among such factorizations. </p>
+<div class="displaymath" id="a0000000004">
+  \[ \begin{tikzcd} 
+  	&& E \\
+  	C &&&& D \\
+  	&& {E'}
+  	\arrow["r", from=1-3, to=2-5]
+  	\arrow["i"', from=1-3, to=3-3]
+  	\arrow["\cong", from=1-3, to=3-3]
+  	\arrow["l", from=2-1, to=1-3]
+  	\arrow["{l'}"', from=2-1, to=3-3]
+  	\arrow["{r'}"', from=3-3, to=2-5]
+  \end{tikzcd} \]
+</div>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-definition" id="a0000000005">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">2</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="index.html#a0000000005">#</a>
+    
+    
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>If \(W\) is a class of morphisms in a category \(\mathcal{C}\) and \(X\) is an object in \(\mathcal{C}\), we define a class of morphisms \(W/X\) in \(\mathcal{C}/X\), given by \(f \in W/X\) iff \(U f \in W\), where \(U : \mathcal{C}/X \to \mathcal{C}\) is the forgetful functor. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="a0000000006">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">3</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="index.html#a0000000006">#</a>
+    
+    
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>If \((L,R)\) is a factorization system in a category \(\mathcal{C}\) and \(X\) is an object in \(\mathcal{C}\), then \((L/X,R/X)\) is a factorization system in \(\mathcal{C}/X\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="a0000000007">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">4</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="index.html#a0000000007">#</a>
+    
+    
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>If \((L,R)\) is a factorization system in a category \(\mathcal{C}\), then the intersection of \(L\) and \(R\) is precisely the class of isomorpihsms in \(\mathcal{C}\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="a0000000008">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">5</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="index.html#a0000000008">#</a>
+    
+    
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>If \((L,R)\) is a factorization system in a category \(\mathcal{C}\), then \(R\) has the left cancellation property and \(L\) has the right cancellation property. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="a0000000009">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="index.html#a0000000009">#</a>
+    
+    
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>\((\text{Epi},\text{Mono})\) is a factorization system in \(\text{Set}\). </p>
+
+  </div>
+</div>
+
 </div> <!--main-text -->
 </div> <!-- content-wrapper -->
 </div> <!-- content -->

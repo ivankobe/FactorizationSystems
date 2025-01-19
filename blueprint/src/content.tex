@@ -5,26 +5,52 @@
 % If you want to split the blueprint content into several files then
 % the current file can be a simple sequence of \input. Otherwise It
 % can start with a \section or \chapter for instance.
+\section*{Definitions and basic properties}
 
-A factorization system in a category $\mathcal{C}$ consists of two classes of morphisms $(L,R)$, such that both $L$ and $R$ contain isomorphisms and are closed under composition, and every morphism $f: C \to D$ in $\mathcal{C}$ admits a factorization into a morphism $l\in L$ followed by a morphism $r\in R$, which is unique up to unique isomorphism among such factorizations.
-\[\begin{tikzcd}
-	&& E \\
-	C &&&& D \\
-	&& {E'}
-	\arrow["r", from=1-3, to=2-5]
-	\arrow["i"', from=1-3, to=3-3]
-	\arrow["\cong", from=1-3, to=3-3]
-	\arrow["l", from=2-1, to=1-3]
-	\arrow["{l'}"', from=2-1, to=3-3]
-	\arrow["{r'}"', from=3-3, to=2-5]
-\end{tikzcd}\]
-Plan of work:
-\begin{itemize}
-    \item show that factorization systems descend to slices
-    \item construct a few elementary examples (in the \textbf{Set}, \textbf{Grp}, \textbf{CRing} etc.)
-    \item show that the left class in a f.s. has the right cancellation property, and, dually, the right class has the left cancellation property
-    \item define the orthogonality relation and show various closure properties of orthogonal complements (under (co)limits, (co)base change, etc.) 
-    \item either of the classes in a f.s. determines the other via orthogonal complements
-    \item recognition principle for factorization systems: $(L,R)$ is a factorization system iff every morphism $f: C \to D$ in $\mathcal{C}$ admits an (apriori non-unique) $(L,R)$-factorization, both classes are replete, and $L\bot R$
-\end{itemize}
-If time permits it, we would also like to use the general theory of factorization systems to define (left-exact) modalities and study some of their properties. In particular, we would like to show that every (left-exact) modality determines a (left-exact) reflective subcategory and vice versa.
+\begin{definition}
+  % \lean{structure:FactorizationSystem}
+  % \leanok
+  A factorization system in a category $\mathcal{C}$ consists of two classes of morphisms $(L,R)$, such that both $L$ and $R$ contain isomorphisms and are closed under composition, and every morphism $f: C \to D$ in $\mathcal{C}$ admits a factorization into a morphism $l\in L$ followed by a morphism $r\in R$, which is unique up to unique isomorphism among such factorizations.
+  \[\begin{tikzcd}
+  	&& E \\
+  	C &&&& D \\
+  	&& {E'}
+  	\arrow["r", from=1-3, to=2-5]
+  	\arrow["i"', from=1-3, to=3-3]
+  	\arrow["\cong", from=1-3, to=3-3]
+  	\arrow["l", from=2-1, to=1-3]
+  	\arrow["{l'}"', from=2-1, to=3-3]
+  	\arrow["{r'}"', from=3-3, to=2-5]
+  \end{tikzcd}\]
+\end{definition}
+
+\begin{definition}
+  % \lean{def:MorphismPropertySlice}
+  % \leanok
+  If $W$ is a class of morphisms in a category $\mathcal{C}$ and $X$ is an object in $\mathcal{C}$, we define a class of morphisms $W/X$ in $\mathcal{C}/X$, given by $f \in W/X$ iff $U f \in W$, where $U : \mathcal{C}/X \to \mathcal{C}$ is the forgetful functor.
+\end{definition}
+
+\begin{lemma}
+  % \lean{def:FactorizationSystemSlice}
+  % \leanok
+  If $(L,R)$ is a factorization system in a category $\mathcal{C}$ and $X$ is an object in $\mathcal{C}$, then $(L/X,R/X)$ is a factorization system in $\mathcal{C}/X$.
+\end{lemma}
+
+\begin{lemma}
+  % \lean{lemma:left_right_intersection_iso}
+  % \leanok
+  If $(L,R)$ is a factorization system in a category $\mathcal{C}$, then the intersection of $L$ and $R$ is precisely the class of isomorpihsms in $\mathcal{C}$.
+\end{lemma}
+
+\begin{lemma}
+  % \lean{lemma:right_cancellation_left_class}
+  % \lean{lemma:left_cancellation_right_class}
+  % \leanok
+  If $(L,R)$ is a factorization system in a category $\mathcal{C}$, then $R$ has the left cancellation property and $L$ has the right cancellation property.
+\end{lemma}
+
+\begin{lemma}
+  % \lean{instance:EpiMonoSet}
+  % \leanok
+  $(\text{Epi},\text{Mono})$ is a factorization system in $\text{Set}$.
+\end{lemma}

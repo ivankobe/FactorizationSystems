@@ -11,8 +11,7 @@ universe u v
 variable {C : Type u} [Category.{v} C]
 
 /-
-We construct some examples of factorization systems:
-  - (Mono,Epi) on Set
+We construct an example of factorization system: (Mono,Epi) on Set
 -/
 
 /- Every iso is an epi -/
@@ -244,20 +243,16 @@ def factorization_iso_is_unique_set : {X Y : Type u} → (f : X ⟶ Y) → (im :
 /- The (Epi,Mono) factorization system on Set -/
 noncomputable
 instance EpiMonoSet : FactorizationSystem
-        (MorphismProperty.epimorphisms (Type u))
-        (MorphismProperty.monomorphisms (Type u)) := by
-    exact
-    {
-        contains_isos_left_class := epimorphismsContainsIsos
-        contains_isos_right_class := monomorphismsContainsIsos
-        is_closed_comp_left_class := epimorphismsClosedUnderComp
-        is_closed_comp_right_class:= monomorphismsClosedUnderComp
-        image := image_set
-        left_map := left_map_set
-        right_map := right_map_set
-        factorization := factorization_set
-        left_map_in_left_class := left_map_in_left_class_set
-        right_map_in_right_class := right_map_in_right_class_set
-        factorization_iso := factorization_iso_set
-        factorization_iso_is_unique := factorization_iso_is_unique_set
-    }
+    (MorphismProperty.epimorphisms (Type u)) (MorphismProperty.monomorphisms (Type u)) := {
+  contains_isos_left_class := epimorphismsContainsIsos
+  contains_isos_right_class := monomorphismsContainsIsos
+  is_closed_comp_left_class := epimorphismsClosedUnderComp
+  is_closed_comp_right_class:= monomorphismsClosedUnderComp
+  image := image_set
+  left_map := left_map_set
+  right_map := right_map_set
+  factorization := factorization_set
+  left_map_in_left_class := left_map_in_left_class_set
+  right_map_in_right_class := right_map_in_right_class_set
+  factorization_iso := factorization_iso_set
+  factorization_iso_is_unique := factorization_iso_is_unique_set }
