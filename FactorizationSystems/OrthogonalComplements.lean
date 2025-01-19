@@ -13,15 +13,20 @@ universe u v
 variable {C : Type u} [Category.{v} C]
 
 
-/- We use hom_orthogonality here not because we want to but because it is a proposition -/
-def right_orthogonal_complement : (W: MorphismProperty C) → MorphismProperty C := by
+/- The right orthogonal complement of a class of morphisms W in a category C -/
+def right_orthogonal_complement : (W : MorphismProperty C) → MorphismProperty C := by
   intro W _ _ f
   exact ∀ ⦃A B : C ⦄ (g : A ⟶ B) (p : W g) , (hom_orthogonal g f)
+
+/- The left orthogonal complement of a class of morphisms W in a category C-/
+def left_orthogonal_complement : (W : MorphismProperty C) → MorphismProperty C := by
+  intro W _ _ f
+  exact ∀ ⦃A B : C⦄ (g : A ⟶ B) (p : W g) , (hom_orthogonal f g)
 
 namespace Arrow
 
 /- We haven't found this in the library, so we first show that the forgetfull functor
-U : [I,C] ⥤ C ; U : (f : X ⟶ Y) ↦ X ; preserves limits. -/
+dom : [I,C] ⥤ C preserves limits. -/
 
 /- A cone over f : J ⥤ Arrow C determines a cone over f ⋙ leftFunc -/
 @[reducible]
@@ -192,7 +197,6 @@ def target_limit_cone_arrow_limit_cone {J : Type u} [Category.{v} J]
 
 /- We now proceed to prove that the right orthogonal complement of a class of morphisms is closed
   under limits. -/
-
 
 /- Given a functor f : J ⥤ Arrow C together with a choice of a limit s : X ⟶ Y, a map m : A ⟶ B
 and a commuting square
@@ -419,7 +423,6 @@ def is_closed_under_limits_r_ort_complement (W : MorphismProperty C) {A B : C} {
   }
 
 /- We now proceed to show that the right orthogonal complement is closed under composition -/
-
 lemma is_closed_under_comp_r_ort_complement (W : MorphismProperty C) {X Y Z : C} (r : X ⟶ Y)
   (hr : (right_orthogonal_complement W) r) (r' : Y ⟶ Z) (hr' : (right_orthogonal_complement W) r') :
   (right_orthogonal_complement W) (r ≫ r') := by
@@ -487,9 +490,64 @@ lemma is_closed_under_comp_r_ort_complement (W : MorphismProperty C) {X Y Z : C}
         comm_bot := by aesop_cat}
       exact (hom_orthogonal_implies_orthogonal (hr l hl)).diagonal_unique S'' Δ Δ'}
 
-/- We now prove that the right orthogonal complement of any class of morphism has the left
-  cancellation property. -/
+/- The left orthogonal complement of any class of morphisms is closed under composition as well -/
+lemma is_closed_under_comp_l_ort_complement (W : MorphismProperty C) {D E F : C} (l : D ⟶ E)
+  (hl : (left_orthogonal_complement W) l) (l' : E ⟶ F) (hl' : (left_orthogonal_complement W) l') :
+  (left_orthogonal_complement W) (l ≫ l') := by
+  intro X Y r hr
+  apply orthogonal_implies_hom_orthogonal
+  exact {
+    diagonal := fun S => by
+      let a := S.top
+      let b := S.bot
+      let S' : l □ r := {
+        top := a
+        bot := l' ≫ b
+        comm := by have comm' := S.comm ; aesop_cat}
+      let d := (hom_orthogonal_implies_orthogonal (hl r hr)).diagonal S'
+      let S'' : l' □ r := {
+        top := d.map
+        bot := b
+        comm := Eq.symm d.comm_bot}
+      let d' := (hom_orthogonal_implies_orthogonal (hl' r hr)).diagonal S''
+      exact {
+        map := d'.map
+        comm_top := by have ct := d.comm_top ; have ct' := d'.comm_top ; aesop_cat
+        comm_bot := d'.comm_bot }
+    diagonal_unique := fun S d d' => by
+      let a := S.top
+      let b := S.bot
+      let S' : l □ r := {
+        top := a
+        bot := l' ≫ b
+        comm := by have comm' := S.comm ; aesop_cat}
+      let D : diagonal_filler S' := {
+        map := l' ≫ d.map
+        comm_top := by have ct := d.comm_top ; aesop_cat
+        comm_bot := by have cb := d.comm_bot ; aesop_cat }
+      let D' : diagonal_filler S' := {
+        map := l' ≫ d'.map
+        comm_top := by have ct' := d'.comm_top ; aesop_cat
+        comm_bot := by have cb' := d'.comm_bot ; aesop_cat }
+      let eq : l' ≫ d.map = l' ≫ d'.map :=
+        (hom_orthogonal_implies_orthogonal (hl r hr)).diagonal_unique S' D D'
+      let S'' : l' □ r := {
+        top := l' ≫ d.map
+        bot := b
+        comm := by calc
+          l' ≫ b = l' ≫ d.map ≫ r := by rw [d.comm_bot]
+          _ = (l' ≫ d.map) ≫ r := by simp }
+      let Δ : diagonal_filler S'' := {
+        map := d.map
+        comm_top := by rfl
+        comm_bot := d.comm_bot }
+      let Δ' : diagonal_filler S'' := {
+        map := d'.map
+        comm_top := Eq.symm eq
+        comm_bot := d'.comm_bot}
+      exact (hom_orthogonal_implies_orthogonal (hl' r hr)).diagonal_unique S'' Δ Δ' }
 
+/- The right orthogonal complement of any class of morphism has the left cancellation property. -/
 lemma left_cancellation_r_ort_complement (W : MorphismProperty C) {X Y Z : C} (r : X ⟶ Y)
   (r' : Y ⟶ Z) (hr' : (right_orthogonal_complement W) r')
   (hr'r : (right_orthogonal_complement W) (r ≫ r')): (right_orthogonal_complement W) r := by
@@ -553,7 +611,6 @@ lemma left_cancellation_r_ort_complement (W : MorphismProperty C) {X Y Z : C} (r
   }
 
 /- Moreover, the right orthogonal complement of any class of morphisms is closed under base change-/
-
 lemma base_change_r_ort_complement [Limits.HasPullbacks C] (W : MorphismProperty C) {Y X' Y' : C}
   (r' : X' ⟶ Y') (hr' : (right_orthogonal_complement W) r') (f : Y ⟶ Y') :
   (right_orthogonal_complement W) (Limits.pullback.snd r' f) := by
@@ -629,3 +686,42 @@ lemma base_change_r_ort_complement [Limits.HasPullbacks C] (W : MorphismProperty
       . calc
         d.map ≫ Limits.pullback.snd r' f = S.bot := d.comm_bot
         _ = d'.map ≫ Limits.pullback.snd r' f := by rw [←d'.comm_bot]}
+
+/- The left orthogonal complement of any class of maps contains isomorphisms -/
+lemma contains_isos_left_ort_complement (R : MorphismProperty C) :
+  contains_isos (left_orthogonal_complement R) := by
+  intro A B f X Y g Rg
+  apply orthogonal_implies_hom_orthogonal
+  exact {
+    diagonal := fun S => by exact {
+      map := f.inv ≫ S.top
+      comm_top := by have c := f.hom_inv_id ; aesop_cat
+      comm_bot := by calc
+        (f.inv ≫ S.top) ≫ g = f.inv ≫ S.top ≫ g := by simp
+        _ = f.inv ≫ f.hom ≫ S.bot := by rw [ S.comm ]
+        _ = (f.inv ≫ f.hom) ≫ S.bot := by simp
+        _ = S.bot := by rw [ f.inv_hom_id ] ; simp }
+    diagonal_unique := fun S d d' => by calc
+      d.map = f.inv ≫ f.hom ≫ d.map := by have c := f.inv_hom_id ; aesop_cat
+      _ = f.inv ≫ S.top := by rw [ d.comm_top ]
+      _ = f.inv ≫ f.hom ≫ d'.map := by rw [ d'.comm_top ]
+      _ = d'.map := by have c := f.inv_hom_id ; aesop_cat }
+
+/- The right orthogonal complement of any class of maps contains isomorphisms -/
+lemma contains_isos_right_ort_complement (L : MorphismProperty C) :
+  contains_isos (right_orthogonal_complement L) := by
+  intro X Y g A B f Lf
+  apply orthogonal_implies_hom_orthogonal
+  exact {
+    diagonal := fun S => by exact {
+      map := S.bot ≫ g.inv
+      comm_top := by calc
+        f ≫ S.bot ≫ g.inv = (f ≫ S.bot) ≫ g.inv := by simp
+        _ = (S.top ≫ g.hom) ≫ g.inv := by rw [ S.comm ]
+        _ = S.top := by have c := g.hom_inv_id ; aesop_cat
+      comm_bot := by have c := g.inv_hom_id ; aesop_cat }
+    diagonal_unique := fun S d d' => by calc
+      d.map = (d.map ≫ g.hom) ≫ g.inv := by have c := g.hom_inv_id ; aesop_cat
+      _ = S.bot ≫ g.inv := by rw [ d.comm_bot ]
+      _ = (d'.map ≫ g.hom) ≫ g.inv := by rw [ d'.comm_bot ]
+      _ = d'.map := by have c := g.hom_inv_id ; aesop_cat }

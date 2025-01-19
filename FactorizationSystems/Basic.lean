@@ -237,7 +237,7 @@ def factorization_iso_is_unique_slice : {X : C} → {L R : MorphismProperty C} �
   rw [←coh']
   aesop_cat
 
-/-- A factorization system in C determines descends to a factorization system in the slice -/
+/-- A factorization system in C descends to a factorization system in the slice -/
 def FactorizationSystemSlice : {X : C} → {L R : MorphismProperty C} →
     (F : FactorizationSystem L R) →
     FactorizationSystem (MorphismPropertySlice L X) (MorphismPropertySlice R X) := by

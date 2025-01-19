@@ -61,8 +61,8 @@ variable {A B X Y : C} (f : A ⟶ B) (g : X ⟶ Y)
 structure diagonal_filler
     {A B X Y : C} {f : A ⟶ B} {g : X ⟶ Y} (S : f □ g) where
   map : B ⟶ X
-  comm_top : f ≫ map = S.top
-  comm_bot : map ≫ g = S.bot
+  comm_top : f ≫ map = S.top := by aesop_cat
+  comm_bot : map ≫ g = S.bot := by aesop_cat
 
 /- The sort of proofs that morphisms f and g are orthogonal -/
 structure orthogonal {A B X Y : C} (f : A ⟶ B) (g : X ⟶ Y)  where
